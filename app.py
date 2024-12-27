@@ -46,7 +46,7 @@ def main():
     st.subheader("Distribution of Spending Score (1-100)")
     plt.figure(figsize=(10, 6))
     sns.set(style="whitegrid")
-    sns.histplot(data["Spending Score (1-100)"], kde=True, color="purple")
+    sns.histplot(data["Spending Score (1-100)"], kde=True)
     plt.title("Distribution of Spending Score (1-100)", fontsize=20)
     plt.xlabel("Spending Score (1-100)")
     plt.ylabel("Count")
