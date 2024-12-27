@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
+import numpy as np
 
 # Load the dataset
 @st.cache
@@ -90,6 +91,25 @@ def main():
     plt.title("Elbow Method for Optimal k", fontsize=20)
     plt.xlabel("Number of Clusters (k)", fontsize=14)
     plt.ylabel("WCSS", fontsize=14)
+    st.pyplot(plt)
+
+    # Additional WSS Calculation for k=1 to k=10
+    st.subheader("WSS (Within-Cluster Sum of Squared Errors) for Different k Values")
+    X2 = data[["Age", "Annual Income (k$)", "Spending Score (1-100)"]]  # Using additional features
+    wcss_2 = []  # List to store WCSS for k=1 to k=10
+
+    # Calculate WCSS for different numbers of clusters (using X2 with 3 features)
+    for k in range(1, 11):
+        kmeans = KMeans(n_clusters=k, init="k-means++")
+        kmeans.fit(X2)
+        wcss_2.append(kmeans.inertia_)
+
+    # Plotting WSS for k=1 to k=10
+    plt.figure(figsize=(12, 6))
+    plt.plot(range(1, 11), wcss_2, linewidth=2, color="red", marker="8")
+    plt.xlabel("K Value", fontsize=14)
+    plt.xticks(np.arange(1, 11, 1))
+    plt.ylabel("WSS (Within-Cluster Sum of Squared Errors)", fontsize=14)
     st.pyplot(plt)
 
     # KMeans Clustering with the Optimal Number of Clusters
