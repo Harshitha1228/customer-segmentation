@@ -86,14 +86,15 @@ def main():
 
     # Plotting the elbow curve
     plt.figure(figsize=(10, 6))
-    plt.plot(range(1, 11), wcss, marker='o')
+    plt.plot(range(1, 11), wcss, marker='o', color='red', linewidth=2)
     plt.title("Elbow Method for Optimal k", fontsize=20)
-    plt.xlabel("Number of Clusters (k)")
-    plt.ylabel("WCSS")
+    plt.xlabel("Number of Clusters (k)", fontsize=14)
+    plt.ylabel("WCSS", fontsize=14)
     st.pyplot(plt)
 
     # KMeans Clustering with the Optimal Number of Clusters
-    optimal_k = st.slider("Select the optimal number of clusters", min_value=1, max_value=10, value=5)
+    optimal_k = st.slider("Select the optimal number of clusters", min_value=1, max_value=10, value=5, step=1)
+
     kmeans = KMeans(n_clusters=optimal_k, random_state=42)
     data['Cluster'] = kmeans.fit_predict(X)
 
