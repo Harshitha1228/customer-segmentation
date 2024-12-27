@@ -4,6 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import numpy as np
+import plotly.express as px
 
 # Load the dataset
 @st.cache
@@ -126,6 +127,13 @@ def main():
     plt.xlabel("Annual Income (k$)")
     plt.ylabel("Spending Score (1-100)")
     st.pyplot(plt)
+
+    # 3D Scatter Plot for Clusters with Age, Annual Income, and Spending Score
+    st.subheader("3D Scatter Plot of Clusters")
+    fig = px.scatter_3d(data, x="Age", y="Annual Income (k$)", z="Spending Score (1-100)", color="Cluster",
+                        title="3D Clusters of Customers Based on Age, Annual Income, and Spending Score",
+                        labels={"Age": "Age", "Annual Income (k$)": "Annual Income (k$)", "Spending Score (1-100)": "Spending Score (1-100)"})
+    st.plotly_chart(fig)
 
 if __name__ == "__main__":
     main()
