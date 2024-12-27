@@ -46,10 +46,21 @@ def main():
     st.subheader("Distribution of Spending Score (1-100)")
     plt.figure(figsize=(10, 6))
     sns.set(style="whitegrid")
-    sns.histplot(data["Spending Score (1-100)"], kde=True)
+    sns.histplot(data["Spending Score (1-100)"], kde=True, color="purple")
     plt.title("Distribution of Spending Score (1-100)", fontsize=20)
     plt.xlabel("Spending Score (1-100)")
     plt.ylabel("Count")
+    st.pyplot(plt)
+
+    # Count of Customers by Gender
+    st.subheader("Count of Customers by Gender")
+    plt.figure(figsize=(8, 5))
+    sns.set(style="whitegrid")
+    gender_counts = data["Gender"].value_counts()
+    sns.barplot(x=gender_counts.index, y=gender_counts.values, palette="pastel")
+    plt.title("Count of Customers by Gender", fontsize=18)
+    plt.xlabel("Gender", fontsize=14)
+    plt.ylabel("Count", fontsize=14)
     st.pyplot(plt)
 
 if __name__ == "__main__":
