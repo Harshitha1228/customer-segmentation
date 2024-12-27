@@ -53,6 +53,16 @@ def main():
     plt.ylabel("Count")
     st.pyplot(plt)
 
+    # Visualization: Distribution of Spending Score
+    st.subheader("Distribution of Spending Score (1-100)")
+    plt.figure(figsize=(10, 6))
+    sns.set(style="whitegrid")
+    sns.histplot(data["Spending Score (1-100)"], kde=True, color="purple")
+    plt.title("Distribution of Spending Score (1-100)", fontsize=20)
+    plt.xlabel("Spending Score (1-100)")
+    plt.ylabel("Count")
+    st.pyplot(plt)
+
     # Scatter Plot: Spending Score vs Annual Income
     st.subheader("Spending Score vs Annual Income")
     plt.figure(figsize=(10, 6))
