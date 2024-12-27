@@ -42,13 +42,23 @@ def main():
     plt.ylabel("Count")
     st.pyplot(plt)
 
-    # Additional Visualization: Spending Score vs Annual Income
+    # Scatter Plot: Spending Score vs Annual Income
     st.subheader("Spending Score vs Annual Income")
     plt.figure(figsize=(10, 6))
     sns.scatterplot(data=data, x="Annual Income (k$)", y="Spending Score (1-100)", hue="Gender")
     plt.title("Spending Score vs Annual Income", fontsize=20)
     plt.xlabel("Annual Income (k$)")
     plt.ylabel("Spending Score (1-100)")
+    st.pyplot(plt)
+
+    # Bar Plot: Count of Customers by Gender
+    st.subheader("Count of Customers by Gender")
+    plt.figure(figsize=(8, 6))
+    sns.set(style="whitegrid")
+    sns.countplot(data=data, x="Gender", palette="viridis")
+    plt.title("Count of Customers by Gender", fontsize=20)
+    plt.xlabel("Gender")
+    plt.ylabel("Count")
     st.pyplot(plt)
 
 if __name__ == "__main__":
