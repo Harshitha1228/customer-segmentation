@@ -8,10 +8,20 @@ import matplotlib.pyplot as plt
 def load_data():
     return pd.read_csv("Mall_Customers.csv")
 
+# Function to categorize income into ranges
+def categorize_income(data):
+    bins = [0, 30, 60, 90, 120, 150]  # Define income ranges
+    labels = ["0-30k", "30-60k", "60-90k", "90-120k", "120-150k"]
+    data["Income Range"] = pd.cut(data["Annual Income (k$)"], bins=bins, labels=labels)
+    return data
+
 # Main Streamlit app
 def main():
     st.title("Mall Customers Analysis")
     data = load_data()
+
+    # Categorize income
+    data = categorize_income(data)
 
     # Display raw data
     if st.checkbox("Show Raw Data"):
@@ -58,6 +68,16 @@ def main():
     sns.countplot(data=data, x="Gender", palette="viridis")
     plt.title("Count of Customers by Gender", fontsize=20)
     plt.xlabel("Gender")
+    plt.ylabel("Count")
+    st.pyplot(plt)
+
+    # Bar Plot: Count of Customers by Income Range
+    st.subheader("Count of Customers by Income Range")
+    plt.figure(figsize=(8, 6))
+    sns.set(style="whitegrid")
+    sns.countplot(data=data, x="Income Range", palette="coolwarm")
+    plt.title("Count of Customers by Income Range", fontsize=20)
+    plt.xlabel("Income Range (k$)")
     plt.ylabel("Count")
     st.pyplot(plt)
 
