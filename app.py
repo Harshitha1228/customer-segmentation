@@ -28,7 +28,7 @@ def main():
     # Distribution of Annual Income
     st.subheader("Distribution of Annual Income (k$)")
     plt.figure(figsize=(10, 6))
-    sns.set(style="whitegrid")
+    sns.set(style="white")  # Set background to white
     sns.histplot(data["Annual Income (k$)"], kde=True)
     plt.title("Distribution of Annual Income (k$)", fontsize=20)
     plt.xlabel("Annual Income (k$)")
@@ -38,7 +38,7 @@ def main():
     # Distribution of Age
     st.subheader("Distribution of Age")
     plt.figure(figsize=(10, 6))
-    sns.set(style="whitegrid")
+    sns.set(style="white")  # Set background to white
     sns.histplot(data["Age"], kde=True)
     plt.title("Distribution of Age", fontsize=20)
     plt.xlabel("Age")
@@ -48,7 +48,7 @@ def main():
     # Distribution of Spending Score
     st.subheader("Distribution of Spending Score (1-100)")
     plt.figure(figsize=(10, 6))
-    sns.set(style="whitegrid")
+    sns.set(style="white")  # Set background to white
     sns.histplot(data["Spending Score (1-100)"], kde=True, color="purple")
     plt.title("Distribution of Spending Score (1-100)", fontsize=20)
     plt.xlabel("Spending Score (1-100)")
@@ -58,7 +58,7 @@ def main():
     # Count of Customers by Gender
     st.subheader("Count of Customers by Gender")
     plt.figure(figsize=(8, 5))
-    sns.set(style="whitegrid")
+    sns.set(style="white")  # Set background to white
     gender_counts = data["Gender"].value_counts()
     sns.barplot(x=gender_counts.index, y=gender_counts.values, palette="pastel")
     plt.title("Count of Customers by Gender", fontsize=18)
@@ -69,6 +69,7 @@ def main():
     # Spending Score vs Annual Income
     st.subheader("Spending Score (1-100) vs Annual Income (k$)")
     plt.figure(figsize=(10, 6))
+    sns.set(style="white")  # Set background to white
     sns.scatterplot(data=data, x="Annual Income (k$)", y="Spending Score (1-100)", hue="Gender", palette="coolwarm")
     plt.title("Spending Score vs Annual Income", fontsize=20)
     plt.xlabel("Annual Income (k$)")
@@ -122,6 +123,7 @@ def main():
     # Scatterplot of the Clusters
     st.subheader(f"Clusters Scatterplot with k={optimal_k}")
     plt.figure(figsize=(10, 6))
+    sns.set(style="white")  # Set background to white
     sns.scatterplot(data=data, x="Annual Income (k$)", y="Spending Score (1-100)", hue="Cluster", palette="viridis", s=100, alpha=0.6)
     plt.title(f"Clusters of Spending Score vs Annual Income (k={optimal_k})", fontsize=20)
     plt.xlabel("Annual Income (k$)")
@@ -133,6 +135,19 @@ def main():
     fig = px.scatter_3d(data, x="Age", y="Annual Income (k$)", z="Spending Score (1-100)", color="Cluster",
                         title="3D Clusters of Customers Based on Age, Annual Income, and Spending Score",
                         labels={"Age": "Age", "Annual Income (k$)": "Annual Income (k$)", "Spending Score (1-100)": "Spending Score (1-100)"})
+    
+    # Set static and white background for 3D plot
+    fig.update_traces(marker=dict(size=5, opacity=1, color='white'))  # White color for the points
+    fig.update_layout(
+        scene=dict(
+            xaxis_title="Age",
+            yaxis_title="Annual Income (k$)",
+            zaxis_title="Spending Score (1-100)"
+        ),
+        plot_bgcolor='white',  # Set the background color of the plot to white
+        paper_bgcolor='white',  # Set the paper background color to white
+        font=dict(color='black')  # Set font color to black for visibility
+    )
     st.plotly_chart(fig)
 
 if __name__ == "__main__":
