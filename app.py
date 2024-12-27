@@ -276,7 +276,7 @@ def main():
     st.subheader(f"Clusters Scatterplot with k={optimal_k}")
     plt.figure(figsize=(10, 6))
     sns.set(style="white")  # Set background to white
-    sns.scatterplot(data=data, x="Annual Income (k$)", y="Spending Score (1-100)", hue="Cluster", s=100, alpha=0.6)
+    sns.scatterplot(data=data, x="Annual Income (k$)", y="Spending Score (1-100)", hue="Cluster", palette="viridis", s=100, alpha=0.6)
     plt.title(f"Clusters of Spending Score vs Annual Income (k={optimal_k})", fontsize=20)
     plt.xlabel("Annual Income (k$)")
     plt.ylabel("Spending Score (1-100)")
