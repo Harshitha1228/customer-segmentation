@@ -63,5 +63,14 @@ def main():
     plt.ylabel("Count", fontsize=14)
     st.pyplot(plt)
 
+    # Spending Score vs Annual Income
+    st.subheader("Spending Score (1-100) vs Annual Income (k$)")
+    plt.figure(figsize=(10, 6))
+    sns.scatterplot(data=data, x="Annual Income (k$)", y="Spending Score (1-100)", hue="Gender", palette="coolwarm")
+    plt.title("Spending Score vs Annual Income", fontsize=20)
+    plt.xlabel("Annual Income (k$)")
+    plt.ylabel("Spending Score (1-100)")
+    st.pyplot(plt)
+
 if __name__ == "__main__":
     main()
