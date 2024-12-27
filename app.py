@@ -28,9 +28,15 @@ def main():
         st.write(data)
 
     # Correlation Matrix
-    st.subheader("Correlation Matrix (Excluding Gender)")
-    correlation_matrix = data.drop(columns=["Gender"]).corr()
-    st.write(correlation_matrix)
+    # Correlation Matrix
+st.subheader("Correlation Matrix (Excluding Gender)")
+
+# Drop non-numeric columns before calculating the correlation matrix
+numeric_data = data.select_dtypes(include=["number"])  # Select only numeric columns
+correlation_matrix = numeric_data.corr()
+
+st.write(correlation_matrix)
+
 
     # Visualization: Distribution of Annual Income
     st.subheader("Distribution of Annual Income (k$)")
