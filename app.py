@@ -17,7 +17,7 @@ def main():
     data = load_data()
 
     # Show raw data
-    if st.checkbox("Show Raw Data", key="raw_data_checkbox"):
+    if st.checkbox("Show Raw Data"):
         st.write(data)
 
     # Correlation Matrix
@@ -117,7 +117,7 @@ def main():
     optimal_k = st.slider("Select the optimal number of clusters", min_value=1, max_value=10, value=5, step=1)
 
     kmeans = KMeans(n_clusters=optimal_k, random_state=42)
-    data['Cluster'] = kmeans.fit_predict(X2)
+    data['Cluster'] = kmeans.fit_predict(X)
 
     # Scatterplot of the Clusters
     st.subheader(f"Clusters Scatterplot with k={optimal_k}")
@@ -133,6 +133,19 @@ def main():
     fig = px.scatter_3d(data, x="Age", y="Annual Income (k$)", z="Spending Score (1-100)", color="Cluster",
                         title="3D Clusters of Customers Based on Age, Annual Income, and Spending Score",
                         labels={"Age": "Age", "Annual Income (k$)": "Annual Income (k$)", "Spending Score (1-100)": "Spending Score (1-100)"})
+    
+    # Set static and white background for 3D plot
+    fig.update_traces(marker=dict(size=5, opacity=1))  # Make points visible
+    fig.update_layout(
+        scene=dict(
+            xaxis_title="Age",
+            yaxis_title="Annual Income (k$)",
+            zaxis_title="Spending Score (1-100)"
+        ),
+        plot_bgcolor='white',  # Set the background color of the plot to white
+        paper_bgcolor='white',  # Set the paper background color to white
+        font=dict(color='black')  # Set font color to black for visibility
+    )
     st.plotly_chart(fig)
 
 if __name__ == "__main__":
