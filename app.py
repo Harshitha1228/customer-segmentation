@@ -93,7 +93,7 @@ def main():
     plt.ylabel("WCSS", fontsize=14)
     st.pyplot(plt)
 
-    # Additional WSS Calculation for k=1 to k=10
+    # WSS (Within-Cluster Sum of Squared Errors) for Different k Values
     st.subheader("WSS (Within-Cluster Sum of Squared Errors) for Different k Values")
     X2 = data[["Age", "Annual Income (k$)", "Spending Score (1-100)"]]  # Using additional features
     wcss_2 = []  # List to store WCSS for k=1 to k=10
@@ -112,17 +112,15 @@ def main():
     plt.ylabel("WSS (Within-Cluster Sum of Squared Errors)", fontsize=14)
     st.pyplot(plt)
 
-    # KMeans Clustering with the Optimal Number of Clusters
-    optimal_k = st.slider("Select the optimal number of clusters", min_value=1, max_value=10, value=5, step=1)
-
-    kmeans = KMeans(n_clusters=optimal_k, random_state=42)
+    # KMeans Clustering with k=5
+    st.subheader("Clusters Scatterplot with k=5")
+    kmeans = KMeans(n_clusters=5, random_state=42)
     data['Cluster'] = kmeans.fit_predict(X)
 
-    # Scatterplot of the Clusters
-    st.subheader(f"Clusters Scatterplot with k={optimal_k}")
+    # Scatterplot of the Clusters with k=5
     plt.figure(figsize=(10, 6))
     sns.scatterplot(data=data, x="Annual Income (k$)", y="Spending Score (1-100)", hue="Cluster", palette="viridis", s=100, alpha=0.6)
-    plt.title(f"Clusters of Spending Score vs Annual Income (k={optimal_k})", fontsize=20)
+    plt.title(f"Clusters of Spending Score vs Annual Income (k=5)", fontsize=20)
     plt.xlabel("Annual Income (k$)")
     plt.ylabel("Spending Score (1-100)")
     st.pyplot(plt)
