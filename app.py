@@ -2,11 +2,24 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 
 # Load the dataset
 @st.cache
 def load_data():
     return pd.read_csv("Mall_Customers.csv")
+
+# Function to calculate the Elbow Method for K Value
+def calculate_elbow_method(data, max_clusters=10):
+    scaler = StandardScaler()
+    scaled_data = scaler.fit_transform(data)
+    wcss = []
+    for i in range(1, max_clusters + 1):
+        kmeans = KMeans(n_clusters=i, random_state=42)
+        kmeans.fit(scaled_data)
+        wcss.append(kmeans.inertia_)
+    return wcss
 
 # Main Streamlit app
 def main():
@@ -70,6 +83,19 @@ def main():
     plt.title("Spending Score vs Annual Income", fontsize=20)
     plt.xlabel("Annual Income (k$)")
     plt.ylabel("Spending Score (1-100)")
+    st.pyplot(plt)
+
+    # K Value (Elbow Method)
+    st.subheader("Optimal K Value (Elbow Method)")
+    clustering_data = data[["Annual Income (k$)", "Spending Score (1-100)"]]
+    wcss = calculate_elbow_method(clustering_data)
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(range(1, 11), wcss, marker='o', linestyle='--', color='b')
+    plt.title("Elbow Method for Optimal K", fontsize=20)
+    plt.xlabel("Number of Clusters (K)")
+    plt.ylabel("WCSS (Within-Cluster Sum of Squares)")
+    plt.xticks(range(1, 11))
     st.pyplot(plt)
 
 if __name__ == "__main__":
