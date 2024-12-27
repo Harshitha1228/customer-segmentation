@@ -4,6 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import numpy as np
+import plotly.express as px
 
 # Load the dataset
 @st.cache
@@ -116,7 +117,7 @@ def main():
     optimal_k = st.slider("Select the optimal number of clusters", min_value=1, max_value=10, value=5, step=1)
 
     kmeans = KMeans(n_clusters=optimal_k, random_state=42)
-    data['Cluster'] = kmeans.fit_predict(X)
+    data['Cluster'] = kmeans.fit_predict(X2)
 
     # Scatterplot of the Clusters
     st.subheader(f"Clusters Scatterplot with k={optimal_k}")
@@ -126,6 +127,13 @@ def main():
     plt.xlabel("Annual Income (k$)")
     plt.ylabel("Spending Score (1-100)")
     st.pyplot(plt)
+
+    # 3D Scatter Plot for Clusters with Age, Annual Income, and Spending Score
+    st.subheader("3D Scatter Plot of Clusters")
+    fig = px.scatter_3d(data, x="Age", y="Annual Income (k$)", z="Spending Score (1-100)", color="Cluster",
+                        title="3D Clusters of Customers Based on Age, Annual Income, and Spending Score",
+                        labels={"Age": "Age", "Annual Income (k$)": "Annual Income (k$)", "Spending Score (1-100)": "Spending Score (1-100)"})
+    st.plotly_chart(fig)
 
 if __name__ == "__main__":
     main()
