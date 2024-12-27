@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
 
 # Load the dataset
 @st.cache
@@ -70,6 +71,25 @@ def main():
     plt.title("Spending Score vs Annual Income", fontsize=20)
     plt.xlabel("Annual Income (k$)")
     plt.ylabel("Spending Score (1-100)")
+    st.pyplot(plt)
+
+    # Elbow Curve
+    st.subheader("Elbow Curve for Optimal Number of Clusters")
+    X = data[["Annual Income (k$)", "Spending Score (1-100)"]]
+    wcss = []  # Within-cluster sum of squares
+
+    # Calculate WCSS for different numbers of clusters
+    for i in range(1, 11):
+        kmeans = KMeans(n_clusters=i, random_state=42)
+        kmeans.fit(X)
+        wcss.append(kmeans.inertia_)
+
+    # Plotting the elbow curve
+    plt.figure(figsize=(10, 6))
+    plt.plot(range(1, 11), wcss, marker='o')
+    plt.title("Elbow Method for Optimal k", fontsize=20)
+    plt.xlabel("Number of Clusters (k)")
+    plt.ylabel("WCSS")
     st.pyplot(plt)
 
 if __name__ == "__main__":
