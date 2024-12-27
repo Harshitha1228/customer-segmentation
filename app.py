@@ -92,5 +92,19 @@ def main():
     plt.ylabel("WCSS")
     st.pyplot(plt)
 
+    # KMeans Clustering with the Optimal Number of Clusters
+    optimal_k = st.slider("Select the optimal number of clusters", min_value=1, max_value=10, value=5)
+    kmeans = KMeans(n_clusters=optimal_k, random_state=42)
+    data['Cluster'] = kmeans.fit_predict(X)
+
+    # Scatterplot of the Clusters
+    st.subheader(f"Clusters Scatterplot with k={optimal_k}")
+    plt.figure(figsize=(10, 6))
+    sns.scatterplot(data=data, x="Annual Income (k$)", y="Spending Score (1-100)", hue="Cluster", palette="viridis", s=100, alpha=0.6)
+    plt.title(f"Clusters of Spending Score vs Annual Income (k={optimal_k})", fontsize=20)
+    plt.xlabel("Annual Income (k$)")
+    plt.ylabel("Spending Score (1-100)")
+    st.pyplot(plt)
+
 if __name__ == "__main__":
     main()
